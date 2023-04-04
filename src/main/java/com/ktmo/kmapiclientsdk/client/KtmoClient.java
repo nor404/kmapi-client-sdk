@@ -21,22 +21,21 @@ import static com.ktmo.kmapiclientsdk.utils.SignUtils.getSign;
  */
 public class KtmoClient {
 
+    private static final  String GATEWAY_HOST="http://localhost:8090/";
     private String accessKey;
     private String secretKey;
-    private static final  String GATEWAY_HOST="http://127.0.0.1:8090/";
 
     public KtmoClient(String accessKey, String secretKey) {
         this.accessKey = accessKey;
         this.secretKey = secretKey;
     }
 
-    public String getName(String name) {
+    public String getNameByGet(String name) {
         //可以单独传入http参数，这样参数会自动做URL编码，拼接在URL中
         HashMap<String, Object> paramMap = new HashMap<>();
         paramMap.put("name", name);
-
         String result3 = HttpUtil.get(GATEWAY_HOST+"api/name/", paramMap);
-        System.out.println("客户端 result3 = " + result3);
+        System.out.println(result3);
         return result3;
     }
 
@@ -44,9 +43,8 @@ public class KtmoClient {
         //可以单独传入http参数，这样参数会自动做URL编码，拼接在URL中
         HashMap<String, Object> paramMap = new HashMap<>();
         paramMap.put("name", name);
-
         String result3 = HttpUtil.post(GATEWAY_HOST+"api/name/", paramMap);
-        System.out.println("客户端 result3 = " + result3);
+        System.out.println(result3);
         return result3;
     }
 
@@ -72,7 +70,6 @@ public class KtmoClient {
                 .addHeaders(getHeadersMap(json))
                 .body(json)
                 .execute();
-
         System.out.println(execute.getStatus());
         System.out.println("状态码" + execute.getStatus());
         String body = execute.body();
